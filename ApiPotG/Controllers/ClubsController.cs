@@ -34,14 +34,32 @@ namespace ApiPotG.Controllers
         {
         }
 
-        // eg. /umbraco/Api/Clubs/GetClubs?id=1071
-        [System.Web.Http.HttpGet]
-        public List<Club> GetClubs(int id)
+        // eg. /umbraco/Api/Clubs/GetClub?id=1071
+        /* [System.Web.Http.HttpGet]
+        public List<Club> GetClub(int id)
         {
             var cs = Services.ContentService;
             List<Club> res = new List<Club>();
             var clubs = cs.GetChildren(id);
 
+            List<Team> teams = tc.GetTeams(club.Id);
+            new Club( var club in clubs);
+            {
+                Id = club.Id,
+                Name = club.Properties["clubTitle"].Value.ToString(),
+                Description = club.Properties["clubDescription"].Value.ToString(),
+                Teams = teams
+            };
+
+        }*/
+        // eg. /umbraco/Api/Clubs/GetClubs?id=1071
+        [System.Web.Http.HttpGet]
+        public List<Club> GetAllClubs(int id)
+        {
+
+            var cs = Services.ContentService;
+            List<Club> allClubs = new List<Club>();
+            var clubs = cs.GetChildren(id);
             var tc = new TeamController();
 
             foreach (var club in clubs)
@@ -55,10 +73,10 @@ namespace ApiPotG.Controllers
                     Description = club.Properties["clubDescription"].Value.ToString(),
                     Teams = teams
                 };
-                res.Add(c);
+               allClubs.Add(c);
             }
 
-            return res;
+            return allClubs;
         }
     }
 }
